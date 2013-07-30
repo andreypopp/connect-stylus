@@ -1,0 +1,33 @@
+{
+  "name": "connect-stylus",
+  "version": "0.0.0",
+  "description": "yet another middleware for Stylus",
+  "main": "lib/index.js",
+  "dependencies": {
+    "stylus": "~0.35.1",
+    "kew": "~0.1.7"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.6.2",
+    "mocha": "~1.9.0",
+    "semver": "~1.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andreypopp/connect-stylus.git"
+  },
+  "homepage": "https://github.com/andreypopp/connect-stylus",
+  "keywords": [
+    "express",
+    "connect",
+    "middleware",
+    "stylus",
+    "css"
+  ],
+  "author": {
+    "name": "Andrey Popp",
+    "email": "8mayday@gmail.com",
+    "url": "http://andreypopp.com"
+  },
+  "license": "MIT"
+}
