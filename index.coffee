@@ -19,10 +19,15 @@ module.exports = (options) ->
     fs.readFile options.entry, (err, data) ->
       return rendered.reject(err) if err
       renderer = stylus(data.toString(), filename: options.entry)
-      options.configure(renderer) if options.configure?
+      if options.use?
+        for use in options.use
+          renderer = renderer.use require(use)()
+      if options.configure?
+        renderer = options.configure(renderer)
       renderer.render (err, result) ->
         return rendered.reject(err) if err
         rendered.resolve(result)
+    rendered
 
   render()
 

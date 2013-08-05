@@ -26,16 +26,23 @@ module.exports = function(options) {
   rendered = void 0;
   render = function() {
     rendered = kew.defer();
-    return fs.readFile(options.entry, function(err, data) {
-      var renderer;
+    fs.readFile(options.entry, function(err, data) {
+      var renderer, use, _i, _len, _ref;
       if (err) {
         return rendered.reject(err);
       }
       renderer = stylus(data.toString(), {
         filename: options.entry
       });
+      if (options.use != null) {
+        _ref = options.use;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          use = _ref[_i];
+          renderer = renderer.use(require(use)());
+        }
+      }
       if (options.configure != null) {
-        options.configure(renderer);
+        renderer = options.configure(renderer);
       }
       return renderer.render(function(err, result) {
         if (err) {
@@ -44,6 +51,7 @@ module.exports = function(options) {
         return rendered.resolve(result);
       });
     });
+    return rendered;
   };
   render();
   if (options.watch !== false) {
