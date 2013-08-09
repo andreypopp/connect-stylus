@@ -1,6 +1,6 @@
 {
   "name": "connect-stylus",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "yet another middleware for Stylus",
   "main": "lib/index.js",
   "peerDependencies": {
