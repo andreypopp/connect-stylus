@@ -34,6 +34,9 @@ module.exports = function(options) {
       renderer = stylus(data.toString(), {
         filename: options.entry
       });
+      if (options.includeCSS != null) {
+        renderer = renderer.set('include css', options.includeCSS);
+      }
       if (options.use != null) {
         _ref = options.use;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {

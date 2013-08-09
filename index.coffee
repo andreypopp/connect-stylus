@@ -19,6 +19,8 @@ module.exports = (options) ->
     fs.readFile options.entry, (err, data) ->
       return rendered.reject(err) if err
       renderer = stylus(data.toString(), filename: options.entry)
+      if options.includeCSS?
+        renderer = renderer.set('include css', options.includeCSS)
       if options.use?
         for use in options.use
           renderer = renderer.use require(use)()
