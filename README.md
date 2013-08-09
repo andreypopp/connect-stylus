@@ -4,7 +4,10 @@ Yet another connect/express middleware for Stylus. Don't ask me why.
 
 ## Installation
 
-    % npm install connect-stylus
+This packages defines stylus as a peer dependency, that means you should install
+your preferred version of stylus yourself:
+
+    % npm install stylus connect-stylus
 
 ## Usage
 

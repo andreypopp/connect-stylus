@@ -3,8 +3,10 @@
   "version": "0.2.0",
   "description": "yet another middleware for Stylus",
   "main": "lib/index.js",
+  "peerDependencies": {
+    "stylus": ">= 0.36.1"
+  },
   "dependencies": {
-    "stylus": "~0.35.1",
     "kew": "~0.1.7"
   },
   "devDependencies": {
