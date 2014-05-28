@@ -46,7 +46,7 @@ module.exports = function(options) {
       }
       return renderer.render(function(err, results) {
         cache = results;
-        return done(err, results);
+        return typeof done === "function" ? done(err, results) : void 0;
       });
     });
   };

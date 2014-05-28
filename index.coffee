@@ -25,7 +25,7 @@ module.exports = (options) ->
         renderer = options.configure(renderer)
       renderer.render (err, results) ->
         cache = results
-        done err, results
+        done? err, results
 
   unless options.watch == false
     dirname = path.dirname(options.entry)
