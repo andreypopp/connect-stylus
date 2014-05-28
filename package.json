@@ -10,9 +10,6 @@
     "test": "mocha test/*.spec.coffee",
     "pretest": "coffee --bare --output ./ --compile index.coffee"
   },
-  "dependencies": {
-    "kew": "~0.1.7"
-  },
   "devDependencies": {
     "chai": "^1.9.1",
     "coffee-errors": "^0.8.6",

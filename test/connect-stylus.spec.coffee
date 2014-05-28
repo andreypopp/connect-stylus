@@ -11,6 +11,8 @@ describe 'connect-stylus', ->
   before ->
     app = express()
     app.use '/index.css', stylus entry: "#{__dirname}/index.styl"
+    app.use '/invalid.css', stylus "#{__dirname}/invalid.styl"
+    app.use (err, req, res, next) -> res.end err.stack
 
   it 'returns rendered css', (done) ->
     supertest(app)
@@ -24,4 +26,12 @@ describe 'connect-stylus', ->
           }
 
           """
+        done()
+
+  it 'handles errors', (done) ->
+    supertest(app)
+      .get '/invalid.css'
+      .expect 500
+      .end (err, {text}) ->
+        expect(text).to.match /^ParseError:/
         done()

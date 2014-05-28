@@ -1,7 +1,6 @@
 path = require 'path'
 fs = require 'fs'
 stylus = require 'stylus'
-kew = require 'kew'
 
 isString = (o) ->
   Object::toString.call(o) == '[object String]'
@@ -11,13 +10,11 @@ isStyl = /\.(styl|css)$/
 module.exports = (options) ->
   options = {entry: options} if isString options
   contentType = options.contentType or 'text/css'
+  cache = null
 
-  rendered = undefined
-
-  render = ->
-    rendered = kew.defer()
+  render = (done) ->
     fs.readFile options.entry, (err, data) ->
-      return rendered.reject(err) if err
+      return done err if err?
       renderer = stylus(data.toString(), filename: options.entry)
       if options.includeCSS?
         renderer = renderer.set('include css', options.includeCSS)
@@ -26,12 +23,9 @@ module.exports = (options) ->
           renderer = renderer.use require(use)()
       if options.configure?
         renderer = options.configure(renderer)
-      renderer.render (err, result) ->
-        return rendered.reject(err) if err
-        rendered.resolve(result)
-    rendered
-
-  render()
+      renderer.render (err, results) ->
+        cache = results
+        done err, results
 
   unless options.watch == false
     dirname = path.dirname(options.entry)
@@ -40,7 +34,8 @@ module.exports = (options) ->
 
   (req, res, next) ->
     res.setHeader('Content-type', contentType)
-    rendered
-      .then (result) ->
-        res.end(result)
-      .fail next
+    return res.end cache if cache?
+
+    render (err, css) ->
+      return next err if err?
+      res.end css
